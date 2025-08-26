@@ -1,6 +1,136 @@
 {
   "G10": [
     {
+      "chapter": "多項式函數列式篇",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "多項式函數列式篇 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSqzID3JNbHwbUd8r9iDCU4"
+        },
+        {
+          "id": "part2",
+          "title": "多項式函數列式篇 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNS8h6Q4h4tELyM8ykEq5Asu"
+        },
+        {
+          "id": "part3",
+          "title": "多項式函數列式篇 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNS_RiJEy6-IZ1fIJhxh6nBp"
+        },
+        {
+          "id": "part4",
+          "title": "多項式函數列式篇 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTlfLcehsc6GvzuvzPIJqTk"
+        }
+      ]
+    },
+    {
+      "chapter": "多項式函數畫圖篇上",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "多項式函數畫圖篇上 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTlhajNKTexIMBWOWZ4vqyn&si=l7S5Rbxpu90iP9h1"
+        },
+        {
+          "id": "part2",
+          "title": "多項式函數畫圖篇上 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRQ2nb72SLKBeEGC1u8PRJ5"
+        },
+        {
+          "id": "part3",
+          "title": "多項式函數畫圖篇上 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRtchVKHEGsg4tYS8ura7ka"
+        }
+      ]
+    },
+    {
+      "chapter": "多項式函數畫圖篇下",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "多項式函數畫圖篇下 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQOkf9bxb0uguI7R3mOTZAC"
+        },
+        {
+          "id": "part2",
+          "title": "多項式函數畫圖篇下 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRdv20l_CAvIlQsTW5WPOM9"
+        },
+        {
+          "id": "part3",
+          "title": "多項式函數畫圖篇下 - part3",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNTc_gDWsw1Or29t8CdpHiPr"
+        }
+      ]
+    },
+    {
+      "chapter": "直線方程式與圖形特徵",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "直線方程式與圖形特徵 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTo2ohp3g42WLqwBECyDnKb"
+        },
+        {
+          "id": "part2",
+          "title": "直線方程式與圖形特徵 - part2",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNTSrgy9CMOlQAtTiXY1KTnt"
+        },
+        {
+          "id": "part3",
+          "title": "直線方程式與圖形特徵 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQDm_w_0jg0FFKOv-DEMTO-"
+        },
+        {
+          "id": "part4",
+          "title": "直線方程式與圖形特徵 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQ2pIxCMZ4qhSA3BPtZROc7"
+        }
+      ]
+    },
+    {
+      "chapter": "直線方程式的應用",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "直線方程式的應用 - part1",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNS5QqdTmSYDqQyhNN7jj9wR"
+        },
+        {
+          "id": "part2",
+          "title": "直線方程式的應用 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQuYwuIqfDIdZC6mcfjXshK"
+        }
+      ]
+    },
+    {
+      "chapter": "圓與直線",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "圓與直線 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTtf1JZD1_19-lopl2PgY8t"
+        },
+        {
+          "id": "part2",
+          "title": "圓與直線 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSaDefoaTie29jFWUSZt_it"
+        },
+        {
+          "id": "part3",
+          "title": "圓與直線 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTBUE_D0SECC_O3LqCN_ETa"
+        },
+        {
+          "id": "part4",
+          "title": "圓與直線 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTUG1mwQAHyEI9QuSLHtPig"
+        }
+      ]
+    },
+    {
       "chapter": "有理數與無理數",
       "parts": [
         {
@@ -164,6 +294,171 @@
           "id": "part6",
           "title": "三角函數公式與疊合 - part6",
           "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNR4fpGH3A2qYBXqF5A1PZQI"
+        }
+      ]
+    },
+    {
+      "chapter": "指數函數與其圖形",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "指數函數與其圖形 - part1",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNT7rtYwuPUnJ4n9IWt9npMk"
+        },
+        {
+          "id": "part2",
+          "title": "指數函數與其圖形 - part2",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQcwDqJ2SWK9LBzr8bzL-pV"
+        },
+        {
+          "id": "part3",
+          "title": "指數函數與其圖形 - part3",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNTYB1bxdzYUQz7WzSa3-ciO"
+        },
+        {
+          "id": "part4",
+          "title": "指數函數與其圖形 - part4",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQqbanyw_v74Czz4xHQhzWb"
+        },
+        {
+          "id": "part5",
+          "title": "指數函數與其圖形 - part5",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNRJ1IlL9GPYmavQyEeSUT86"
+        }
+      ]
+    },
+    {
+      "chapter": "對數基本運算",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "對數基本運算 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTRiiKBvZRRBBxEXxwFX0uc"
+        },
+        {
+          "id": "part2",
+          "title": "對數基本運算 - part2",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNR8oKHB0UExEaRirUFB_IuL"
+        },
+        {
+          "id": "part3",
+          "title": "對數基本運算 - part3",
+          "url": "https://m.youtube.com/playlist?list=PLRnUkUbjftNSl5lGaOzRMB1EviOGC4D7G"
+        },
+        {
+          "id": "part4",
+          "title": "對數基本運算 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRZPNNsk-yZwzhFwrVWwL5D"
+        }
+      ]
+    },
+    {
+      "chapter": "對數函數與其圖形",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "對數函數與其圖形 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSqdwxtZtfKeYlHwm9EemY9"
+        },
+        {
+          "id": "part2",
+          "title": "對數函數與其圖形 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQCJt7BhpGtVLmGg22Vw9ul"
+        },
+        {
+          "id": "part3",
+          "title": "對數函數與其圖形 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTlgxVO9LpmrmyQ9rg4RSQD"
+        },
+        {
+          "id": "part4",
+          "title": "對數函數與其圖形 - part4",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNT-NWDn_vPHlx-NCUT3aJmW"
+        },
+        {
+          "id": "part5",
+          "title": "對數函數與其圖形 - part5",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNTqtAS0B3WYUvJX1ZyxJY1T"
+        }
+      ]
+    },
+    {
+      "chapter": "平面向量表示法",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "平面向量表示法 - part1",
+          "url": "https://youtu.be/OewCVjvBlCM?si=9zUQbed817HzMbDT"
+        },
+        {
+          "id": "part2",
+          "title": "平面向量表示法 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTbqNCEoWz67Mp_6v6CWExW"
+        },
+        {
+          "id": "part3",
+          "title": "平面向量表示法 - part3",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQVGAUGDgNQZbTdZ5RocXt2"
+        },
+        {
+          "id": "part4",
+          "title": "平面向量表示法 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSES8Vq1zwjs1O5A4b-JoPW"
+        },
+        {
+          "id": "part5",
+          "title": "平面向量表示法 - part5",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNRaRawj53luVtPR9gMYpeUb"
+        },
+        {
+          "id": "part6",
+          "title": "平面向量表示法 - part6",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQpSdwU0HchigZSyy0I3v7I"
+        }
+      ]
+    },
+    {
+      "chapter": "平面向量的內積與應用",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "平面向量的內積與應用 - part1",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNSB-d-C7_SiMR7LKEWP6MPZ"
+        },
+        {
+          "id": "part2",
+          "title": "平面向量的內積與應用 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTaScuN4eKQBsUDINTrOs4D"
+        },
+        {
+          "id": "part3",
+          "title": "平面向量的內積與應用 - part3",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNS6rsHqt9QpSFJLtflT1NMw"
+        },
+        {
+          "id": "part4",
+          "title": "平面向量的內積與應用 - part4",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNTQqDpYfF77WH599pRFXtB_"
+        },
+        {
+          "id": "part5",
+          "title": "平面向量的內積與應用 - part5",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNR0OUyEdrrw3kn_bxc1ViqO"
+        }
+      ]
+    },
+    {
+      "chapter": "二階行列式與其應用",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "二階行列式與其應用 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRqgfVkTqkPENDXIYG-B54k"
+        },
+        {
+          "id": "part2",
+          "title": "二階行列式與其應用 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRJ_LhNXkyaAwd0kuAMUD0C"
         }
       ]
     }
