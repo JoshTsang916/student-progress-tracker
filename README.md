@@ -15,7 +15,7 @@
 
 ## 📱 線上預覽
 
-**GitHub Pages**: [https://your-username.github.io/student-progress-tracker/public/](https://your-username.github.io/student-progress-tracker/public/)
+**GitHub Pages**: [https://joshtsang916.github.io/student-progress-tracker/](https://joshtsang916.github.io/student-progress-tracker/)
 
 ## 🛠️ 本地開發
 
@@ -25,21 +25,19 @@
 python3 -m http.server 5500
 
 # 開啟瀏覽器訪問
-# http://localhost:5500/public/index.html
+# http://localhost:5500/index.html
 ```
 
 ### 方法二：直接開啟檔案
-直接用瀏覽器開啟 `public/index.html` 會因為 CORS 政策無法載入 JSON 資料，請使用方法一。
+直接用瀏覽器開啟 `index.html` 會因為 CORS 政策無法載入 JSON 資料，請使用方法一。
 
 ## 📁 專案結構
 
 ```
 03-student-progress/
-├── public/
-│   └── index.html          # 主要應用程式 (單檔 SPA)
-├── data/
-│   ├── curriculum.json     # 課程章節資料
-│   └── students.json       # 學生初始資料
+├── index.html              # 主要應用程式 (單檔 SPA)
+├── curriculum.json         # 課程章節資料
+├── students.json           # 學生初始資料
 ├── n8n-workflow.json       # n8n 工作流配置
 └── README.md
 ```
@@ -102,7 +100,7 @@ hi {學生姓名}
 
 支援 URL hash 定位特定學生：
 ```
-https://your-site.com/public/index.html#student=a041b947
+https://joshtsang916.github.io/student-progress-tracker/#student=a041b947
 ```
 
 ## 🎨 主題
