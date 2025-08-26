@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生進度追蹤系統</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --background-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] {
+            --background-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-color: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-lg: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .header {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--background-color);
+            color: var(--text-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .tab:hover {
+            background: var(--surface-color);
+        }
+
+        .tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box, .grade-filter {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--background-color);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .search-box {
+            min-width: 200px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--background-color);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--surface-color);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .student-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .student-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .student-card.highlighted {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .student-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .student-grade {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .student-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .day-tag {
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .progress-section {
+            margin-bottom: 1rem;
+        }
+
+        .progress-selects {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .progress-selects select {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--surface-color);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            color: white;
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            background: var(--success-color);
+        }
+
+        .toast-error {
+            background: var(--danger-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .file-error {
+            background: var(--warning-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header-content {
+                gap: 0.5rem;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions {
+                margin-left: 0;
+            }
+
+            .student-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .student-card {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tabs {
+                width: 100%;
+            }
+
+            .tab {
+                flex: 1;
+                text-align: center;
+                padding: 0.5rem 0.25rem;
+                font-size: 0.8rem;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .student-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="file-error hidden" id="fileError">
+        <strong>無法載入資料檔案</strong><br>
+        請確保使用本地伺服器開啟此頁面：<br>
+        1. 在專案根目錄執行：<code>python3 -m http.server 5500</code><br>
+        2. 開啟：<code>http://localhost:5500/public/index.html</code>
+    </div>
+
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="toolbar">
+                    <div class="tabs">
+                        <div class="tab active" data-day="All">全部</div>
+                        <div class="tab" data-day="Mon">一</div>
+                        <div class="tab" data-day="Tue">二</div>
+                        <div class="tab" data-day="Wed">三</div>
+                        <div class="tab" data-day="Thu">四</div>
+                        <div class="tab" data-day="Fri">五</div>
+                        <div class="tab" data-day="Sat">六</div>
+                        <div class="tab" data-day="Sun">日</div>
+                    </div>
+                    
+                    <div class="filters">
+                        <select class="grade-filter" id="gradeFilter">
+                            <option value="">全部年級</option>
+                            <option value="G10">G10</option>
+                            <option value="G11">G11</option>
+                            <option value="G12">G12</option>
+                        </select>
+                        
+                        <input type="text" class="search-box" id="searchBox" placeholder="搜尋學生姓名..." />
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn" id="darkModeBtn">🌙</button>
+                        <button class="btn" id="importBtn">匯入</button>
+                        <button class="btn" id="exportBtn">匯出</button>
+                        <button class="btn btn-primary" id="addStudentBtn">新增學生</button>
+                        <button class="btn btn-success" id="sendToN8nBtn">送到 n8n</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="student-grid" id="studentGrid">
+        </div>
+
+        <div class="empty-state hidden" id="emptyState">
+            <h3>沒有符合條件的學生</h3>
+            <p>請調整篩選條件或新增學生</p>
+        </div>
+    </div>
+
+    <div class="modal" id="studentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">新增學生</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="studentName">姓名 *</label>
+                    <input type="text" id="studentName" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentGrade">年級 *</label>
+                    <select id="studentGrade" required>
+                        <option value="">選擇年級</option>
+                        <option value="G10">G10</option>
+                        <option value="G11">G11</option>
+                        <option value="G12">G12</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>上課日 *</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Mon" value="Mon" />
+                            <label for="day-Mon">一</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Tue" value="Tue" />
+                            <label for="day-Tue">二</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Wed" value="Wed" />
+                            <label for="day-Wed">三</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Thu" value="Thu" />
+                            <label for="day-Thu">四</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Fri" value="Fri" />
+                            <label for="day-Fri">五</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Sat" value="Sat" />
+                            <label for="day-Sat">六</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="day-Sun" value="Sun" />
+                            <label for="day-Sun">日</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="progressGrade">進度年級</label>
+                    <select id="progressGrade">
+                        <option value="">選擇年級</option>
+                        <option value="G10">G10</option>
+                        <option value="G11">G11</option>
+                        <option value="G12">G12</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="progressChapter">章節</label>
+                    <select id="progressChapter" disabled>
+                        <option value="">選擇章節</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="progressPart">Part</label>
+                    <select id="progressPart" disabled>
+                        <option value="">選擇 Part</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentNotes">備註</label>
+                    <textarea id="studentNotes" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn" id="cancelModalBtn">取消</button>
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" accept=".json" style="display: none;" />
+
+    <script>
+        const N8N_WEBHOOK_URL = "https://flows.josh0916.com/webhook/student-preclass";
+        
+        let students = [];
+        let curriculum = {};
+        let currentFilter = {
+            day: 'All',
+            grade: '',
+            search: ''
+        };
+        let editingStudent = null;
+
+        const STORAGE_KEYS = {
+            STUDENTS: 'sp/v1/students',
+            SETTINGS: 'sp/v1/settings'
+        };
+
+        function generateId() {
+            return Math.random().toString(16).substr(2, 8);
+        }
+
+        function saveToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.STUDENTS, JSON.stringify(students));
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(currentFilter));
+            } catch (e) {
+                console.error('儲存失敗:', e);
+            }
+        }
+
+        function loadFromStorage() {
+            try {
+                const savedStudents = localStorage.getItem(STORAGE_KEYS.STUDENTS);
+                if (savedStudents) {
+                    students = JSON.parse(savedStudents);
+                }
+
+                const savedSettings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+                    currentFilter = { ...currentFilter, ...settings };
+                    applyStoredSettings();
+                }
+            } catch (e) {
+                console.error('載入設定失敗:', e);
+            }
+        }
+
+        function applyStoredSettings() {
+            document.querySelector(`[data-day="${currentFilter.day}"]`)?.classList.add('active');
+            document.getElementById('gradeFilter').value = currentFilter.grade || '';
+            document.getElementById('searchBox').value = currentFilter.search || '';
+        }
+
+        async function loadData() {
+            try {
+                const [curriculumResponse, studentsResponse] = await Promise.all([
+                    fetch('../curriculum.json'),
+                    fetch('../students.json').catch(() => ({ ok: false }))
+                ]);
+
+                if (!curriculumResponse.ok) {
+                    throw new Error('無法載入課程資料');
+                }
+
+                curriculum = await curriculumResponse.json();
+
+                if (studentsResponse.ok) {
+                    const initialStudents = await studentsResponse.json();
+                    if (!localStorage.getItem(STORAGE_KEYS.STUDENTS)) {
+                        students = initialStudents;
+                        saveToStorage();
+                    }
+                }
+
+                loadFromStorage();
+                renderStudents();
+            } catch (error) {
+                console.error('載入資料失敗:', error);
+                document.getElementById('fileError').classList.remove('hidden');
+            }
+        }
+
+        function filterStudents() {
+            let filtered = students;
+
+            if (currentFilter.day !== 'All') {
+                filtered = filtered.filter(student => 
+                    student.days.includes(currentFilter.day)
+                );
+            }
+
+            if (currentFilter.grade) {
+                filtered = filtered.filter(student => 
+                    student.grade === currentFilter.grade
+                );
+            }
+
+            if (currentFilter.search) {
+                filtered = filtered.filter(student => 
+                    student.name.toLowerCase().includes(currentFilter.search.toLowerCase())
+                );
+            }
+
+            return filtered;
+        }
+
+        function getProgressUrl(student) {
+            if (!student.progress || !student.progress.chapter || !student.progress.partId) {
+                return null;
+            }
+
+            const gradeData = curriculum[student.grade];
+            if (!gradeData) return null;
+
+            const chapter = gradeData.find(c => c.chapter === student.progress.chapter);
+            if (!chapter) return null;
+
+            const part = chapter.parts.find(p => p.id === student.progress.partId);
+            return part ? part.url : null;
+        }
+
+        function generateMessage(student) {
+            const url = getProgressUrl(student);
+            return `hi ${student.name}\n等一下準備好要上課的時候跟我說一聲 我們就繼續往後學\n${url || '（尚未設定連結）'}`;
+        }
+
+        function copyMessage(student) {
+            const message = generateMessage(student);
+            navigator.clipboard.writeText(message).then(() => {
+                showToast('已複製訊息', 'success');
+            }).catch(() => {
+                showToast('複製失敗', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        function renderStudents() {
+            const filtered = filterStudents();
+            const grid = document.getElementById('studentGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(student => `
+                <div class="student-card" id="student-${student.id}">
+                    <div class="student-header">
+                        <div class="student-info">
+                            <h3>${student.name}</h3>
+                            <span class="student-grade">${student.grade}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="student-days">
+                        ${student.days.map(day => `
+                            <span class="day-tag">${{
+                                Mon: '一', Tue: '二', Wed: '三', Thu: '四',
+                                Fri: '五', Sat: '六', Sun: '日'
+                            }[day]}</span>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-selects">
+                            <select id="chapter-${student.id}" onchange="updateProgress('${student.id}', 'chapter', this.value)">
+                                <option value="">選擇章節</option>
+                                ${curriculum[student.grade]?.map(chapter => `
+                                    <option value="${chapter.chapter}" ${student.progress?.chapter === chapter.chapter ? 'selected' : ''}>${chapter.chapter}</option>
+                                `).join('') || ''}
+                            </select>
+                            
+                            <select id="part-${student.id}" onchange="updateProgress('${student.id}', 'part', this.value)" ${!student.progress?.chapter ? 'disabled' : ''}>
+                                <option value="">選擇 Part</option>
+                                ${student.progress?.chapter ? curriculum[student.grade]?.find(c => c.chapter === student.progress.chapter)?.parts.map(part => `
+                                    <option value="${part.id}" ${student.progress?.partId === part.id ? 'selected' : ''}>${part.title}</option>
+                                `).join('') || '' : ''}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="student-actions">
+                        <button class="btn btn-sm" onclick="copyMessage(students.find(s => s.id === '${student.id}'))">複製訊息</button>
+                        <button class="btn btn-sm" onclick="editStudent('${student.id}')">編輯</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteStudent('${student.id}')">刪除</button>
+                    </div>
+                </div>
+            `).join('');
+
+            checkHashHighlight();
+        }
+
+        function updateProgress(studentId, field, value) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+
+            if (!student.progress) {
+                student.progress = { chapter: '', partId: '' };
+            }
+
+            if (field === 'chapter') {
+                student.progress.chapter = value;
+                student.progress.partId = '';
+            } else if (field === 'part') {
+                student.progress.partId = value;
+            }
+
+            saveToStorage();
+            renderStudents();
+        }
+
+        function editStudent(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+
+            editingStudent = student;
+            
+            document.getElementById('modalTitle').textContent = '編輯學生';
+            document.getElementById('studentName').value = student.name;
+            document.getElementById('studentGrade').value = student.grade;
+            document.getElementById('studentNotes').value = student.notes || '';
+
+            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
+                document.getElementById(`day-${day}`).checked = student.days.includes(day);
+            });
+
+            if (student.progress) {
+                document.getElementById('progressGrade').value = student.grade;
+                updateChapterOptions();
+                document.getElementById('progressChapter').value = student.progress.chapter || '';
+                updatePartOptions();
+                document.getElementById('progressPart').value = student.progress.partId || '';
+            } else {
+                document.getElementById('progressGrade').value = student.grade;
+                updateChapterOptions();
+            }
+
+            document.getElementById('studentModal').classList.add('show');
+        }
+
+        function deleteStudent(studentId) {
+            if (!confirm('確定要刪除這位學生嗎？')) return;
+
+            students = students.filter(s => s.id !== studentId);
+            saveToStorage();
+            renderStudents();
+            showToast('已刪除學生', 'success');
+        }
+
+        function updateChapterOptions() {
+            const gradeSelect = document.getElementById('progressGrade');
+            const chapterSelect = document.getElementById('progressChapter');
+            const partSelect = document.getElementById('progressPart');
+            
+            const selectedGrade = gradeSelect.value;
+            
+            chapterSelect.innerHTML = '<option value="">選擇章節</option>';
+            partSelect.innerHTML = '<option value="">選擇 Part</option>';
+            
+            if (selectedGrade && curriculum[selectedGrade]) {
+                chapterSelect.disabled = false;
+                curriculum[selectedGrade].forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter.chapter;
+                    option.textContent = chapter.chapter;
+                    chapterSelect.appendChild(option);
+                });
+            } else {
+                chapterSelect.disabled = true;
+                partSelect.disabled = true;
+            }
+        }
+
+        function updatePartOptions() {
+            const gradeSelect = document.getElementById('progressGrade');
+            const chapterSelect = document.getElementById('progressChapter');
+            const partSelect = document.getElementById('progressPart');
+            
+            const selectedGrade = gradeSelect.value;
+            const selectedChapter = chapterSelect.value;
+            
+            partSelect.innerHTML = '<option value="">選擇 Part</option>';
+            
+            if (selectedGrade && selectedChapter && curriculum[selectedGrade]) {
+                const chapter = curriculum[selectedGrade].find(c => c.chapter === selectedChapter);
+                if (chapter) {
+                    partSelect.disabled = false;
+                    chapter.parts.forEach(part => {
+                        const option = document.createElement('option');
+                        option.value = part.id;
+                        option.textContent = part.title;
+                        partSelect.appendChild(option);
+                    });
+                } else {
+                    partSelect.disabled = true;
+                }
+            } else {
+                partSelect.disabled = true;
+            }
+        }
+
+        function checkHashHighlight() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#student=')) {
+                const studentId = hash.substring(9);
+                const studentCard = document.getElementById(`student-${studentId}`);
+                if (studentCard) {
+                    currentFilter.day = 'All';
+                    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+                    document.querySelector('[data-day="All"]').classList.add('active');
+                    renderStudents();
+                    
+                    setTimeout(() => {
+                        const updatedCard = document.getElementById(`student-${studentId}`);
+                        if (updatedCard) {
+                            updatedCard.classList.add('highlighted');
+                            updatedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 100);
+                }
+            }
+        }
+
+        function getTodayWeekday() {
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const today = new Date();
+            const taipeiTime = new Date(today.toLocaleString("en-US", {timeZone: "Asia/Taipei"}));
+            return days[taipeiTime.getDay()];
+        }
+
+        async function sendToN8n() {
+            try {
+                const today = getTodayWeekday();
+                const todayStudents = students.filter(student => student.days.includes(today));
+                
+                const payload = {
+                    dateISO: new Date().toISOString(),
+                    weekday: today,
+                    count: todayStudents.length,
+                    students: todayStudents.map(student => ({
+                        id: student.id,
+                        name: student.name,
+                        grade: student.grade,
+                        days: student.days,
+                        url: getProgressUrl(student),
+                        message: generateMessage(student)
+                    }))
+                };
+
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    showToast(`已成功發送 ${payload.count} 位學生的資料到 n8n`, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                showToast(`發送失敗: ${error.message}`, 'error');
+                console.error('發送 n8n 失敗:', error);
+            }
+        }
+
+        function exportData() {
+            try {
+                const dataStr = JSON.stringify(students, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'students.json';
+                link.click();
+                URL.revokeObjectURL(url);
+                showToast('匯出成功', 'success');
+            } catch (error) {
+                showToast('匯出失敗', 'error');
+            }
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImportFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('檔案格式錯誤：必須是學生陣列');
+                    }
+
+                    const merge = confirm('選擇「確定」合併資料，「取消」覆蓋現有資料');
+                    
+                    if (merge) {
+                        const existingIds = new Set(students.map(s => s.id));
+                        const newStudents = importedData.filter(s => !existingIds.has(s.id));
+                        students = [...students, ...newStudents];
+                        showToast(`已合併 ${newStudents.length} 位新學生`, 'success');
+                    } else {
+                        students = importedData;
+                        showToast(`已匯入 ${students.length} 位學生`, 'success');
+                    }
+
+                    saveToStorage();
+                    renderStudents();
+                } catch (error) {
+                    showToast(`匯入失敗: ${error.message}`, 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.hasAttribute('data-theme');
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                document.getElementById('darkModeBtn').textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('darkModeBtn').textContent = '☀️';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter.day = this.dataset.day;
+                    saveToStorage();
+                    renderStudents();
+                });
+            });
+
+            document.getElementById('gradeFilter').addEventListener('change', function() {
+                currentFilter.grade = this.value;
+                saveToStorage();
+                renderStudents();
+            });
+
+            document.getElementById('searchBox').addEventListener('input', function() {
+                currentFilter.search = this.value;
+                saveToStorage();
+                renderStudents();
+            });
+
+            document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
+            document.getElementById('importBtn').addEventListener('click', importData);
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('sendToN8nBtn').addEventListener('click', sendToN8n);
+            document.getElementById('importFile').addEventListener('change', handleImportFile);
+
+            document.getElementById('addStudentBtn').addEventListener('click', function() {
+                editingStudent = null;
+                document.getElementById('modalTitle').textContent = '新增學生';
+                document.getElementById('studentForm').reset();
+                document.getElementById('progressChapter').disabled = true;
+                document.getElementById('progressPart').disabled = true;
+                document.getElementById('progressGrade').value = '';
+                document.getElementById('studentModal').classList.add('show');
+            });
+
+            document.getElementById('closeModalBtn').addEventListener('click', function() {
+                document.getElementById('studentModal').classList.remove('show');
+            });
+
+            document.getElementById('cancelModalBtn').addEventListener('click', function() {
+                document.getElementById('studentModal').classList.remove('show');
+            });
+
+            document.getElementById('progressGrade').addEventListener('change', updateChapterOptions);
+            document.getElementById('progressChapter').addEventListener('change', updatePartOptions);
+
+            document.getElementById('studentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('studentName').value.trim();
+                const grade = document.getElementById('studentGrade').value;
+                const notes = document.getElementById('studentNotes').value.trim();
+                
+                const days = [];
+                ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(day => {
+                    if (document.getElementById(`day-${day}`).checked) {
+                        days.push(day);
+                    }
+                });
+
+                if (!name || !grade || days.length === 0) {
+                    showToast('請填寫必要欄位', 'error');
+                    return;
+                }
+
+                const progress = {
+                    chapter: document.getElementById('progressChapter').value,
+                    partId: document.getElementById('progressPart').value
+                };
+
+                if (!progress.chapter) {
+                    progress = null;
+                }
+
+                if (editingStudent) {
+                    editingStudent.name = name;
+                    editingStudent.grade = grade;
+                    editingStudent.days = days;
+                    editingStudent.progress = progress;
+                    editingStudent.notes = notes;
+                    showToast('已更新學生資料', 'success');
+                } else {
+                    const newStudent = {
+                        id: generateId(),
+                        name,
+                        grade,
+                        days,
+                        progress,
+                        notes
+                    };
+                    students.push(newStudent);
+                    showToast('已新增學生', 'success');
+                }
+
+                saveToStorage();
+                renderStudents();
+                document.getElementById('studentModal').classList.remove('show');
+            });
+
+            window.addEventListener('hashchange', checkHashHighlight);
+
+            document.getElementById('studentModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

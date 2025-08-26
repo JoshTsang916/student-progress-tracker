@@ -1,0 +1,243 @@
+{
+  "G10": [
+    {
+      "chapter": "有理數與無理數",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "有理數與無理數 - part1",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQRDVrwItVgqbzXj2FF4Uhz"
+        },
+        {
+          "id": "part2",
+          "title": "有理數與無理數 - part2",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQgypFCDdue-Thgygbtvb-t"
+        },
+        {
+          "id": "part3",
+          "title": "有理數與無理數 - part3",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNQznA2HkEpYmUXs38QHz2oj"
+        },
+        {
+          "id": "part4",
+          "title": "有理數與無理數 - part4",
+          "url": "https://www.youtube.com/watch?v=hXGXPwUcuko&list=PLRnUkUbjftNSMroXq-GWyfIUW51EbAuoo&index=1"
+        }
+      ]
+    },
+    {
+      "chapter": "分點公式與絕對值",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "分點公式與絕對值 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRX8pxK3z6GCNDyg3sRIyzE"
+        },
+        {
+          "id": "part2",
+          "title": "分點公式與絕對值 - part2",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNRa29RzXO07QIon7E5j3Kyu"
+        },
+        {
+          "id": "part3",
+          "title": "分點公式與絕對值 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQPbyuBlqXXoKSBRxqEVNcN"
+        }
+      ]
+    },
+    {
+      "chapter": "指數與對數",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "指數與對數 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRyjWfwdZHyxI6HQVYprnr8"
+        },
+        {
+          "id": "part2",
+          "title": "指數與對數 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQUAWmaqBP6IgqWeKza4VpT"
+        },
+        {
+          "id": "part3",
+          "title": "指數與對數 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRWmMK5klDv1PPbLnVGKllz"
+        },
+        {
+          "id": "part4",
+          "title": "指數與對數 - part4",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNRMAhKk6bsia0W8hxFe5Lrl"
+        },
+        {
+          "id": "part5",
+          "title": "指數與對數 - part5",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNSIu9RYY76xEVBrXJgLcH9V"
+        }
+      ]
+    }
+  ],
+  "G11": [
+    {
+      "chapter": "弧度量與扇形",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "弧度量與扇形 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNT0PMS3Lf9B9_g9ANCKy4Tf"
+        },
+        {
+          "id": "part2",
+          "title": "弧度量與扇形 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSeXtLEpZgTohXXeSjqPmVl"
+        },
+        {
+          "id": "part3",
+          "title": "弧度量與扇形 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSEgz9t4pq6pKydEpCWUBDk"
+        },
+        {
+          "id": "part4",
+          "title": "弧度量與扇形 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNS6H_JLToG1_RCXL7eQ9VU-"
+        }
+      ]
+    },
+    {
+      "chapter": "三角函數的圖形",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "三角函數的圖形 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTPzroUid1vicGj2gSXS9Qj"
+        },
+        {
+          "id": "part2",
+          "title": "三角函數的圖形 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRAFbYiVjpnZQVrdxf57FQu"
+        },
+        {
+          "id": "part3",
+          "title": "三角函數的圖形 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQgF4aD9xlIE198NFKQpLTk"
+        },
+        {
+          "id": "part4",
+          "title": "三角函數的圖形 - part4",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNSoLXs1Z0lRsW-vGiSRPt5G"
+        },
+        {
+          "id": "part5",
+          "title": "三角函數的圖形 - part5",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNR38e4XvrS9ZWZ--BwWRt7W"
+        }
+      ]
+    },
+    {
+      "chapter": "三角函數公式與疊合",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "三角函數公式與疊合 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTjV5zgaTJZdwzhSgmlLitR"
+        },
+        {
+          "id": "part2",
+          "title": "三角函數公式與疊合 - part2",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTQOVCe7xEZ-PHVDaU51YQA"
+        },
+        {
+          "id": "part3",
+          "title": "三角函數公式與疊合 - part3",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNT_wN-2KlTwttdhKovplj8w"
+        },
+        {
+          "id": "part4",
+          "title": "三角函數公式與疊合 - part4",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNTw3IyQK5LsHww4UtSG5Pjq"
+        },
+        {
+          "id": "part5",
+          "title": "三角函數公式與疊合 - part5",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQbVQEe5DZeUXBJ5Nv4mlYG"
+        },
+        {
+          "id": "part6",
+          "title": "三角函數公式與疊合 - part6",
+          "url": "https://www.youtube.com/playlist?list=PLRnUkUbjftNR4fpGH3A2qYBXqF5A1PZQI"
+        }
+      ]
+    }
+  ],
+  "G12": [
+    {
+      "chapter": "學測複習第一冊",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習第一冊 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRCB3yrMXAN7l1BPKql6X_-"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習第二冊",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習第二冊 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNRFmKIPeynXBjOJ0LntqDsn"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習三角比",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習三角比 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNS-GMWsrhsPNsHMMuNRpXyz"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習三角函數",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習三角函數 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQQwiKGrGzHWDB45GrPr-jj&si=EKc5qzsxA3vG7Is5"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習第三冊",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習第三冊 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNQ1mNw90EXG6bRgCnT2LcK4&si=PTKLvOaaTqATjE0V"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習第四冊上",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習第四冊上 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNSQw8-6ZJ8BuXyKMwM6ZGMU&si=ySGi1SDmuvhqsRyE"
+        }
+      ]
+    },
+    {
+      "chapter": "學測複習第四冊下",
+      "parts": [
+        {
+          "id": "part1",
+          "title": "學測複習第四冊下 - part1",
+          "url": "https://youtube.com/playlist?list=PLRnUkUbjftNT4fVpBj_cXoptY99wWKJxz&si=kLid3bPtCe6uFeWI"
+        }
+      ]
+    }
+  ]
+}

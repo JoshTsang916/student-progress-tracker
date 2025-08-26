@@ -1,0 +1,205 @@
+{
+  "name": "Student Progress Daily Messages",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "value": "0 8 * * 1-7"
+            }
+          ]
+        }
+      },
+      "id": "cfe8e836-3b0f-4b9a-9c5a-2f7a8d3c4e5b",
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "student-preclass",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a7b3c9d8-e5f2-4a1b-8c6d-9e0f1a2b3c4d",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ],
+      "webhookId": "student-preclass"
+    },
+    {
+      "parameters": {
+        "message": "=Cron triggered at {{ $now }}",
+        "options": {}
+      },
+      "id": "b8c4d0e9-f6a3-5b2c-9d7e-0f1a2b3c4d5e",
+      "name": "Log Trigger",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 模擬點擊「送到 n8n」按鈕的功能\n// 計算今天是星期幾（台北時區）\nconst days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];\nconst today = new Date();\nconst taipeiTime = new Date(today.toLocaleString(\"en-US\", {timeZone: \"Asia/Taipei\"}));\nconst todayWeekday = days[taipeiTime.getDay()];\n\n// 從 localStorage 獲取學生資料（這裡需要實際的資料，先用範例）\n// 實際使用時需要從網頁的 localStorage 中取得\nconst sampleStudents = [\n  {\n    \"id\": \"a041b947\",\n    \"name\": \"閔聖\",\n    \"grade\": \"G10\",\n    \"days\": [\"Wed\", \"Sat\"],\n    \"progress\": {\n      \"chapter\": \"有理數與無理數\",\n      \"partId\": \"part1\"\n    },\n    \"notes\": \"\"\n  },\n  {\n    \"id\": \"25165601\",\n    \"name\": \"翊瑋\",\n    \"grade\": \"G10\",\n    \"days\": [\"Wed\", \"Sun\"],\n    \"progress\": null,\n    \"notes\": \"\"\n  }\n];\n\n// 過濾今天要上課的學生\nconst todayStudents = sampleStudents.filter(student => \n  student.days.includes(todayWeekday)\n);\n\n// 生成每個學生的課前訊息\nconst studentsWithMessages = todayStudents.map(student => {\n  let url = null;\n  \n  // 如果有進度，嘗試獲取 URL（這裡簡化處理）\n  if (student.progress && student.progress.chapter && student.progress.partId) {\n    // 實際應用中需要根據 curriculum.json 查找對應的 URL\n    url = \"https://www.youtube.com/playlist?list=PLRnUkUbjftNQRDVrwItVgqbzXj2FF4Uhz\";\n  }\n  \n  const message = `hi ${student.name}\\n等一下準備好要上課的時候跟我說一聲 我們就繼續往後學\\n${url || '（尚未設定連結）'}`;\n  \n  return {\n    id: student.id,\n    name: student.name,\n    grade: student.grade,\n    days: student.days,\n    url: url,\n    message: message\n  };\n});\n\n// 建構最終的 payload\nconst payload = {\n  dateISO: new Date().toISOString(),\n  weekday: todayWeekday,\n  count: studentsWithMessages.length,\n  students: studentsWithMessages\n};\n\nreturn [payload];"
+      },
+      "id": "c9d5e1f0-a7b4-6c3d-0e8f-1a2b3c4d5e6f",
+      "name": "Process Student Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition_1",
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d0e6f2a1-b8c5-7d4e-1f9a-2b3c4d5e6f7a",
+      "name": "Has Students Today?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "message": "=今天 {{ $json.weekday }} 有 {{ $json.count }} 位學生要上課",
+        "options": {}
+      },
+      "id": "e1f7a3b2-c9d6-8e5f-2a0b-3c4d5e6f7a8b",
+      "name": "Log Students Found",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "message": "=今天 {{ $json.weekday }} 沒有學生要上課",
+        "options": {}
+      },
+      "id": "f2a8b4c3-d0e7-9f6a-3b1c-4d5e6f7a8b9c",
+      "name": "Log No Students",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily Trigger": {
+      "main": [
+        [
+          {
+            "node": "Log Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Student Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Trigger": {
+      "main": [
+        [
+          {
+            "node": "Process Student Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Student Data": {
+      "main": [
+        [
+          {
+            "node": "Has Students Today?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Students Today?": {
+      "main": [
+        [
+          {
+            "node": "Log Students Found",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log No Students",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0.0",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "student-progress-daily",
+  "tags": []
+}
