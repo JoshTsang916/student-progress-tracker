@@ -477,12 +477,9 @@
 
                     <div class="actions">
                         <button class="btn" id="darkModeBtn">🌙</button>
-                        <button class="btn" id="reloadBtn">重新載入檔案</button>
-                        <button class="btn" id="saveFileBtn">儲存檔案</button>
                         <button class="btn" id="importBtn">匯入</button>
                         <button class="btn" id="exportBtn">匯出</button>
                         <button class="btn btn-primary" id="addStudentBtn">新增學生</button>
-                        <button class="btn btn-success" id="sendToN8nBtn">手動送到 n8n</button>
                     </div>
                 </div>
             </div>
@@ -596,7 +593,6 @@
     <input type="file" id="importFile" accept=".json" style="display: none;" />
 
     <script>
-        const N8N_WEBHOOK_URL = "https://flows.josh0916.com/webhook/student-preclass";
         
         let students = [];
         let curriculum = {};
@@ -942,109 +938,7 @@
             return days[taipeiTime.getDay()];
         }
 
-        function autoSendToN8n() {
-            const today = getTodayWeekday();
-            const todayStudents = students.filter(student => student.days.includes(today));
-            
-            if (todayStudents.length > 0) {
-                console.log(`自動發送：今天 ${today} 有 ${todayStudents.length} 位學生要上課`);
-                sendToN8n(true);
-            } else {
-                console.log(`今天 ${today} 沒有學生要上課`);
-            }
-        }
 
-        function scheduleAutoSend() {
-            const now = new Date();
-            const taipeiTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Taipei"}));
-            
-            const targetHour = 8;
-            const targetMinute = 0;
-            
-            let nextSend = new Date(taipeiTime);
-            nextSend.setHours(targetHour, targetMinute, 0, 0);
-            
-            if (taipeiTime >= nextSend) {
-                nextSend.setDate(nextSend.getDate() + 1);
-            }
-            
-            const msUntilNextSend = nextSend.getTime() - taipeiTime.getTime();
-            
-            console.log(`已排程自動發送：${nextSend.toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'})}`);
-            
-            setTimeout(() => {
-                autoSendToN8n();
-                setInterval(autoSendToN8n, 24 * 60 * 60 * 1000);
-            }, msUntilNextSend);
-        }
-
-        async function sendToN8n(isAutomatic = false) {
-            try {
-                const today = getTodayWeekday();
-                const todayStudents = students.filter(student => student.days.includes(today));
-                
-                const payload = {
-                    dateISO: new Date().toISOString(),
-                    weekday: today,
-                    count: todayStudents.length,
-                    automatic: isAutomatic,
-                    students: todayStudents.map(student => ({
-                        id: student.id,
-                        name: student.name,
-                        grade: student.grade,
-                        days: student.days,
-                        url: getProgressUrl(student),
-                        message: generateMessage(student)
-                    }))
-                };
-
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    const successMsg = isAutomatic 
-                        ? `自動發送成功：${payload.count} 位學生的資料已送到 n8n`
-                        : `已成功發送 ${payload.count} 位學生的資料到 n8n`;
-                    
-                    if (isAutomatic) {
-                        console.log(successMsg);
-                    } else {
-                        showToast(successMsg, 'success');
-                    }
-                } else {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-            } catch (error) {
-                const errorMsg = `發送失敗: ${error.message}`;
-                if (isAutomatic) {
-                    console.error('自動發送 n8n 失敗:', error);
-                } else {
-                    showToast(errorMsg, 'error');
-                    console.error('發送 n8n 失敗:', error);
-                }
-            }
-        }
-
-        function saveStudentFile() {
-            try {
-                const dataStr = JSON.stringify(students, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
-                const url = URL.createObjectURL(dataBlob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'students.json';
-                link.click();
-                URL.revokeObjectURL(url);
-                showToast('students.json 已下載，請手動替換專案中的檔案', 'success');
-            } catch (error) {
-                showToast('儲存檔案失敗', 'error');
-            }
-        }
 
         function exportData() {
             try {
@@ -1062,26 +956,6 @@
             }
         }
 
-        async function reloadStudentFile() {
-            try {
-                const response = await fetch('./students.json');
-                if (!response.ok) {
-                    throw new Error('無法載入學生檔案');
-                }
-                
-                const fileStudents = await response.json();
-                
-                if (confirm(`確定要從檔案重新載入學生資料嗎？\n這將覆蓋目前的 ${students.length} 位學生資料，載入檔案中的 ${fileStudents.length} 位學生。`)) {
-                    students = fileStudents;
-                    saveToStorage();
-                    renderStudents();
-                    showToast('已重新載入學生檔案', 'success');
-                }
-            } catch (error) {
-                showToast('重新載入失敗: ' + error.message, 'error');
-                console.error('重新載入學生檔案失敗:', error);
-            }
-        }
 
         function importData() {
             document.getElementById('importFile').click();
@@ -1134,9 +1008,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            loadData();
+            // 設定預設為深色模式
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('darkModeBtn').textContent = '☀️';
             
-            scheduleAutoSend();
+            loadData();
 
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -1161,11 +1037,8 @@
             });
 
             document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
-            document.getElementById('reloadBtn').addEventListener('click', reloadStudentFile);
-            document.getElementById('saveFileBtn').addEventListener('click', saveStudentFile);
             document.getElementById('importBtn').addEventListener('click', importData);
             document.getElementById('exportBtn').addEventListener('click', exportData);
-            document.getElementById('sendToN8nBtn').addEventListener('click', sendToN8n);
             document.getElementById('importFile').addEventListener('change', handleImportFile);
 
             document.getElementById('addStudentBtn').addEventListener('click', function() {
