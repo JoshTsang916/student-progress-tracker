@@ -477,6 +477,7 @@
 
                     <div class="actions">
                         <button class="btn" id="darkModeBtn">🌙</button>
+                        <button class="btn" id="reloadBtn">重新載入檔案</button>
                         <button class="btn" id="importBtn">匯入</button>
                         <button class="btn" id="exportBtn">匯出</button>
                         <button class="btn btn-primary" id="addStudentBtn">新增學生</button>
@@ -1044,6 +1045,27 @@
             }
         }
 
+        async function reloadStudentFile() {
+            try {
+                const response = await fetch('./students.json');
+                if (!response.ok) {
+                    throw new Error('無法載入學生檔案');
+                }
+                
+                const fileStudents = await response.json();
+                
+                if (confirm(`確定要從檔案重新載入學生資料嗎？\n這將覆蓋目前的 ${students.length} 位學生資料，載入檔案中的 ${fileStudents.length} 位學生。`)) {
+                    students = fileStudents;
+                    saveToStorage();
+                    renderStudents();
+                    showToast('已重新載入學生檔案', 'success');
+                }
+            } catch (error) {
+                showToast('重新載入失敗: ' + error.message, 'error');
+                console.error('重新載入學生檔案失敗:', error);
+            }
+        }
+
         function importData() {
             document.getElementById('importFile').click();
         }
@@ -1122,6 +1144,7 @@
             });
 
             document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
+            document.getElementById('reloadBtn').addEventListener('click', reloadStudentFile);
             document.getElementById('importBtn').addEventListener('click', importData);
             document.getElementById('exportBtn').addEventListener('click', exportData);
             document.getElementById('sendToN8nBtn').addEventListener('click', sendToN8n);
