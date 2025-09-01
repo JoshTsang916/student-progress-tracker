@@ -480,7 +480,7 @@
                         <button class="btn" id="importBtn">匯入</button>
                         <button class="btn" id="exportBtn">匯出</button>
                         <button class="btn btn-primary" id="addStudentBtn">新增學生</button>
-                        <button class="btn btn-success" id="sendToN8nBtn">送到 n8n</button>
+                        <button class="btn btn-success" id="sendToN8nBtn">手動送到 n8n</button>
                     </div>
                 </div>
             </div>
@@ -940,7 +940,43 @@
             return days[taipeiTime.getDay()];
         }
 
-        async function sendToN8n() {
+        function autoSendToN8n() {
+            const today = getTodayWeekday();
+            const todayStudents = students.filter(student => student.days.includes(today));
+            
+            if (todayStudents.length > 0) {
+                console.log(`自動發送：今天 ${today} 有 ${todayStudents.length} 位學生要上課`);
+                sendToN8n(true);
+            } else {
+                console.log(`今天 ${today} 沒有學生要上課`);
+            }
+        }
+
+        function scheduleAutoSend() {
+            const now = new Date();
+            const taipeiTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Taipei"}));
+            
+            const targetHour = 8;
+            const targetMinute = 0;
+            
+            let nextSend = new Date(taipeiTime);
+            nextSend.setHours(targetHour, targetMinute, 0, 0);
+            
+            if (taipeiTime >= nextSend) {
+                nextSend.setDate(nextSend.getDate() + 1);
+            }
+            
+            const msUntilNextSend = nextSend.getTime() - taipeiTime.getTime();
+            
+            console.log(`已排程自動發送：${nextSend.toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'})}`);
+            
+            setTimeout(() => {
+                autoSendToN8n();
+                setInterval(autoSendToN8n, 24 * 60 * 60 * 1000);
+            }, msUntilNextSend);
+        }
+
+        async function sendToN8n(isAutomatic = false) {
             try {
                 const today = getTodayWeekday();
                 const todayStudents = students.filter(student => student.days.includes(today));
@@ -949,6 +985,7 @@
                     dateISO: new Date().toISOString(),
                     weekday: today,
                     count: todayStudents.length,
+                    automatic: isAutomatic,
                     students: todayStudents.map(student => ({
                         id: student.id,
                         name: student.name,
@@ -968,13 +1005,26 @@
                 });
 
                 if (response.ok) {
-                    showToast(`已成功發送 ${payload.count} 位學生的資料到 n8n`, 'success');
+                    const successMsg = isAutomatic 
+                        ? `自動發送成功：${payload.count} 位學生的資料已送到 n8n`
+                        : `已成功發送 ${payload.count} 位學生的資料到 n8n`;
+                    
+                    if (isAutomatic) {
+                        console.log(successMsg);
+                    } else {
+                        showToast(successMsg, 'success');
+                    }
                 } else {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
             } catch (error) {
-                showToast(`發送失敗: ${error.message}`, 'error');
-                console.error('發送 n8n 失敗:', error);
+                const errorMsg = `發送失敗: ${error.message}`;
+                if (isAutomatic) {
+                    console.error('自動發送 n8n 失敗:', error);
+                } else {
+                    showToast(errorMsg, 'error');
+                    console.error('發送 n8n 失敗:', error);
+                }
             }
         }
 
@@ -1046,6 +1096,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
+            
+            scheduleAutoSend();
 
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', function() {
