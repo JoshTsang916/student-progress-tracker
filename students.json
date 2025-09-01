@@ -26,7 +26,8 @@
     "name": "采靚",
     "grade": "G10",
     "days": [
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "progress": null,
     "notes": ""
@@ -58,7 +59,7 @@
     "grade": "G10",
     "days": [
       "Tue",
-      "Thu"
+      "Wed"
     ],
     "progress": null,
     "notes": ""
@@ -101,6 +102,7 @@
     "name": "家溱",
     "grade": "G11",
     "days": [
+      "Mon",
       "Fri",
       "Sat"
     ],
@@ -278,17 +280,6 @@
     "grade": "G11",
     "days": [
       "Tue",
-      "Fri"
-    ],
-    "progress": null,
-    "notes": ""
-  },
-  {
-    "id": "17eeddac",
-    "name": "紅利",
-    "grade": "G11",
-    "days": [
-      "Wed",
       "Fri"
     ],
     "progress": null,
@@ -485,6 +476,17 @@
     "grade": "G12",
     "days": [
       "Thu",
+      "Sat"
+    ],
+    "progress": null,
+    "notes": ""
+  },
+  {
+    "id": "f495cf8b",
+    "name": "庭樺",
+    "grade": "G10",
+    "days": [
+      "Wed",
       "Sat"
     ],
     "progress": null,
