@@ -478,6 +478,7 @@
                     <div class="actions">
                         <button class="btn" id="darkModeBtn">🌙</button>
                         <button class="btn" id="reloadBtn">重新載入檔案</button>
+                        <button class="btn" id="saveFileBtn">儲存檔案</button>
                         <button class="btn" id="importBtn">匯入</button>
                         <button class="btn" id="exportBtn">匯出</button>
                         <button class="btn btn-primary" id="addStudentBtn">新增學生</button>
@@ -1029,6 +1030,22 @@
             }
         }
 
+        function saveStudentFile() {
+            try {
+                const dataStr = JSON.stringify(students, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'students.json';
+                link.click();
+                URL.revokeObjectURL(url);
+                showToast('students.json 已下載，請手動替換專案中的檔案', 'success');
+            } catch (error) {
+                showToast('儲存檔案失敗', 'error');
+            }
+        }
+
         function exportData() {
             try {
                 const dataStr = JSON.stringify(students, null, 2);
@@ -1145,6 +1162,7 @@
 
             document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
             document.getElementById('reloadBtn').addEventListener('click', reloadStudentFile);
+            document.getElementById('saveFileBtn').addEventListener('click', saveStudentFile);
             document.getElementById('importBtn').addEventListener('click', importData);
             document.getElementById('exportBtn').addEventListener('click', exportData);
             document.getElementById('sendToN8nBtn').addEventListener('click', sendToN8n);
